@@ -12,6 +12,9 @@ import jakarta.persistence.PrePersist;
 import jakarta.persistence.Table;
 import jakarta.persistence.Temporal;
 import jakarta.persistence.TemporalType;
+import jakarta.validation.constraints.Email;
+import jakarta.validation.constraints.NotEmpty;
+import jakarta.validation.constraints.Size;
 
 @Entity
 @Table(name="client")
@@ -21,8 +24,17 @@ public class Client implements Serializable{
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	private Long id;
 	
+	@NotEmpty(message="Can't be empty")
+	@Size(min=4, max=12, message="Size must be between 4 and 12")
+	@Column(nullable=false)
 	private String firstName;
+	
+	@NotEmpty(message="Can't be empty")
 	private String lastName;
+	
+	@NotEmpty(message="Can't be empty")
+	@Email(message="Email must be valid")
+	@Column(nullable=false, unique=true)
 	private String email;
 
 	@Column(name="created_at")
