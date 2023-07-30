@@ -8,12 +8,13 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
-import jakarta.persistence.PrePersist;
+// import jakarta.persistence.PrePersist;
 import jakarta.persistence.Table;
 import jakarta.persistence.Temporal;
 import jakarta.persistence.TemporalType;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotEmpty;
+import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
 
 @Entity
@@ -37,14 +38,16 @@ public class Client implements Serializable{
 	@Column(nullable=false, unique=true)
 	private String email;
 
+	@NotNull(message="It can't be null")
 	@Column(name="created_at")
 	@Temporal(TemporalType.DATE)
 	private Date createdAt;
 
-	@PrePersist
-	public void prePersist() {
-		createdAt = new Date();
-	}
+	private String picture;
+	// @PrePersist
+	// public void prePersist() {
+	// 	createdAt = new Date();
+	// }
 	
 	public Long getId() {
 		return id;
@@ -86,6 +89,13 @@ public class Client implements Serializable{
 		this.createdAt = createdAt;
 	}
 
-
 	private static final long serialVersionUID = 1L;
+
+	public String getPicture() {
+		return picture;
+	}
+
+	public void setPicture(String picture) {
+		this.picture = picture;
+	}
 }
